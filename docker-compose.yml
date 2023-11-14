@@ -9,3 +9,26 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
     command:
       - start-dev
+    volumes:
+      - C:/2023_Kodlama/dockerVolumes/rentCarKeycloakVolume:/opt/keycloak/data
+
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: test
+    volumes:
+      - C:/2023_Kodlama/dockerVolumes/rentCarPostgreVolume:/var/lib/postgresql/data
+
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - C:\2023_Kodlama\dockerVolumes\rentCarMongoVolume:/data/db
