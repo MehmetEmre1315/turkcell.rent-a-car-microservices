@@ -1,21 +1,15 @@
-package com.turkcell.carservice.entities;
+package com.turkcell.carservice.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigDecimal;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Data
-@Document(value = "Cars")
-public class Car {
-    @Id
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class AddCarToDtoResponse {
     private String id;
     private String brand;
     private String model;
@@ -23,6 +17,4 @@ public class Car {
     private int modelYear;
     private float dailyRentalPrice;
     private String picture;
-
-
 }
