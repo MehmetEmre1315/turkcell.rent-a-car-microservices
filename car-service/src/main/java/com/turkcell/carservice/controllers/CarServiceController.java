@@ -1,0 +1,42 @@
+package com.turkcell.carservice.controllers;
+
+import com.turkcell.carservice.dto.requests.AddCarToDtoRequest;
+import com.turkcell.carservice.dto.requests.GetByIdCarDtoRequest;
+import com.turkcell.carservice.dto.responses.AddCarToDtoResponse;
+import com.turkcell.carservice.dto.responses.GetByIdCarDtoResponse;
+import com.turkcell.carservice.services.CarService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RequestMapping("CarService")
+@RestController
+@RequiredArgsConstructor
+public class CarServiceController {
+    private final CarService carService;
+
+    @PostMapping("addCar")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AddCarToDtoResponse addCar(@RequestBody AddCarToDtoRequest request) {
+        return carService.addCar(request);
+    }
+
+    @PostMapping("getByIdCar")
+    @ResponseStatus(HttpStatus.OK)
+    public GetByIdCarDtoResponse getByIdCar(@RequestBody GetByIdCarDtoRequest request) {return carService.getById(request);}
+
+    @GetMapping("getAll")
+    @ResponseStatus(HttpStatus.OK)
+    public List<GetByIdCarDtoResponse> getAll() {return carService.getAll();}
+
+    @DeleteMapping("deleteById")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@RequestBody GetByIdCarDtoRequest request) {carService.deleteById(request);}
+
+    @PutMapping("updateCar")
+    @ResponseStatus(HttpStatus.OK)
+    public AddCarToDtoResponse updateCar(@RequestBody AddCarToDtoRequest request) {return carService.update(request);}
+
+}

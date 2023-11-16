@@ -1,0 +1,5 @@
+Realm name = turkcell.rent-a-car-microservices
+client id = spring-api-gataway-client
+Client authentication = on
+Authentication flow = Service accounts roles
+issuer = http://localhost:8080/realms/turkcell.rent-a-car-microservices
