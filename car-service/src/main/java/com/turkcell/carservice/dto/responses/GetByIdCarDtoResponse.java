@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 
 @Data
 @NoArgsConstructor
@@ -18,4 +17,5 @@ public class GetByIdCarDtoResponse {
     private int modelYear;
     private float dailyRentalPrice;
     private String picture;
+    private boolean isCarAvailableToRental;
 }

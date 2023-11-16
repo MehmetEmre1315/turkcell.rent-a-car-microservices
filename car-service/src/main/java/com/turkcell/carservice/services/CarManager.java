@@ -1,6 +1,7 @@
 package com.turkcell.carservice.services;
 
 import com.turkcell.carservice.dto.requests.AddCarToDtoRequest;
+import com.turkcell.carservice.dto.requests.AddRentalCar;
 import com.turkcell.carservice.dto.requests.GetByIdCarDtoRequest;
 import com.turkcell.carservice.dto.responses.AddCarToDtoResponse;
 import com.turkcell.carservice.dto.responses.GetByIdCarDtoResponse;
@@ -9,6 +10,8 @@ import com.turkcell.carservice.repositories.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +20,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarManager implements CarService{
     private final CarRepository carRepository;
+    private final WebClient.Builder webClientBuilder;
 
     @Override
+    @Transactional
     public AddCarToDtoResponse addCar(AddCarToDtoRequest request) {
         Car car = Car.builder()
                 .id(request.getId())
@@ -40,7 +45,36 @@ public class CarManager implements CarService{
                 .dailyRentalPrice(request.getDailyRentalPrice())
                 .picture(request.getPicture())
                 .build();
+        addCarToRentalService(response);
         return response;
+    }
+
+    public void addCarToRentalService( AddCarToDtoResponse response){
+        AddRentalCar rentalCar = AddRentalCar.builder()
+                .carId(response.getId())
+                .build();
+        webClientBuilder.build()
+                .post()
+                .uri("http://rental-service/RentalService/addRentalCar")
+                .bodyValue(rentalCar)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+    public boolean isCarAvailableToRental(int id){
+        AddRentalCar rentalCar = AddRentalCar.builder()
+                .carId(id)
+                .build();
+
+        Boolean isCarAvailable = webClientBuilder.build()
+                .post()
+                .uri("http://rental-service/RentalService/isAvailableToRent")
+                .bodyValue(rentalCar)
+                .retrieve()
+                .bodyToMono(Boolean.class)
+                .block();
+        return isCarAvailable;
+
     }
 
     @Override
@@ -55,6 +89,7 @@ public class CarManager implements CarService{
                 .modelYear(car.getModelYear())
                 .dailyRentalPrice(car.getDailyRentalPrice())
                 .picture(car.getPicture())
+                .isCarAvailableToRental(isCarAvailableToRental(car.getId()))
                 .build();
         return response;
     }
@@ -72,6 +107,7 @@ public class CarManager implements CarService{
                     .modelYear(car.getModelYear())
                     .dailyRentalPrice(car.getDailyRentalPrice())
                     .picture(car.getPicture())
+                    .isCarAvailableToRental(isCarAvailableToRental(car.getId()))
                     .build();
             responses.add(response);
         }
