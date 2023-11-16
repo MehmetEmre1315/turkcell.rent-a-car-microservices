@@ -1,6 +1,6 @@
 # Proje Çalışması 1
 
-![Untitled_Diagram.drawio_1.png](..%2F..%2F..%2FUsers%2Fkahra%2FDownloads%2FUntitled_Diagram.drawio_1.png)
+![Untitled_Diagram.drawio_1.png](images%2FUntitled_Diagram.drawio_1.png)
 
 
 Projenize aşağıdaki servisleri base yapıda ekleyiniz;
