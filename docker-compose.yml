@@ -1,3 +1,4 @@
+version: '2.7'
 services:
   keycloak:
     image: quay.io/keycloak/keycloak
@@ -14,22 +15,29 @@ services:
 
   postgres:
     image: postgres
+    container_name: postgresdb
     restart: always
     ports:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: test
+#    networks:
+#      - my-network
     volumes:
       - C:/2023_Kodlama/dockerVolumes/rentCarPostgreVolume:/var/lib/postgresql/data
 
   mongodb:
     image: mongo
+    container_name: mongodb
+    hostname: mongodb
     restart: always
     ports:
       - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+#    networks:
+#      - my-network
     volumes:
       - C:\2023_Kodlama\dockerVolumes\rentCarMongoVolume:/data/db
 
@@ -38,8 +46,8 @@ services:
     ports:
       - 8020:8020
     mem_limit: 700m
-    networks:
-      - my-network
+#    networks:
+#      - my-network
 #    depends_on:
 
 
@@ -48,30 +56,28 @@ services:
     ports:
       - 8761:8761
     mem_limit: 700m
-    networks:
-      - my-network
+
     depends_on:
       - keycloak
 
   rental-service:
-    image: mehmetemre46/rentcarrentalservice:version1.0
+    image: mehmetemre46/rentcarrentalservice:version1.5
     ports:
       - 7001:7001
     mem_limit: 700m
-    networks:
-      - my-network
+
     depends_on:
       - postgres
       - discovery-service
       - api-gateway
 
   car-service:
-    image: mehmetemre46/rentcarservice:version1.1
+    image: mehmetemre46/rentcarservice:version1.4
     ports:
       - 6001:6001
     mem_limit: 700m
-    networks:
-      - my-network
+#    networks:
+#      - my-network
     depends_on:
       - mongodb
       - discovery-service
