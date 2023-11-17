@@ -15,7 +15,8 @@ public class SecurityConfig {
         serverHttpSecurity
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/eureka/**")
+                        //.pathMatchers("/eureka/**")
+                        .pathMatchers("/**")// bu her url ye izin veriyor
                         .permitAll()
                         .anyExchange()
                         .authenticated())
