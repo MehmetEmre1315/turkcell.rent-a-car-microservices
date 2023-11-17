@@ -1,0 +1,4 @@
+docker build -t mehmetemre46/rentcarapigateway:version1.2 .
+docker build -t mehmetemre46/rentcardiscoveryserver:version1.1 .
+
+

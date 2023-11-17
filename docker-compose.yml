@@ -32,3 +32,51 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: root
     volumes:
       - C:\2023_Kodlama\dockerVolumes\rentCarMongoVolume:/data/db
+
+  api-gateway:
+    image: mehmetemre46/rentcarapigateway:version1.2
+    ports:
+      - 8020:8020
+    mem_limit: 700m
+    networks:
+      - my-network
+#    depends_on:
+
+
+  discovery-service:
+    image: mehmetemre46/rentcardiscoveryserver:version1.1
+    ports:
+      - 8761:8761
+    mem_limit: 700m
+    networks:
+      - my-network
+    depends_on:
+      - keycloak
+
+  rental-service:
+    image: mehmetemre46/rentcarrentalservice:version1.0
+    ports:
+      - 7001:7001
+    mem_limit: 700m
+    networks:
+      - my-network
+    depends_on:
+      - postgres
+      - discovery-service
+      - api-gateway
+
+  car-service:
+    image: mehmetemre46/rentcarservice:version1.1
+    ports:
+      - 6001:6001
+    mem_limit: 700m
+    networks:
+      - my-network
+    depends_on:
+      - mongodb
+      - discovery-service
+      - api-gateway
+
+networks:
+  my-network:
+    driver: bridge
