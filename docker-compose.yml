@@ -42,6 +42,7 @@ services:
       - C:\2023_Kodlama\dockerVolumes\rentCarMongoVolume:/data/db
 
   api-gateway:
+    build: ./api-gateway
     image: mehmetemre46/rentcarapigateway:version1.2
     ports:
       - 8020:8020
@@ -52,6 +53,7 @@ services:
 
 
   discovery-service:
+    build: ./discovery-server
     image: mehmetemre46/rentcardiscoveryserver:version1.1
     ports:
       - 8761:8761
@@ -61,6 +63,7 @@ services:
       - keycloak
 
   rental-service:
+    build: ./rental-service
     image: mehmetemre46/rentcarrentalservice:version1.5
     ports:
       - 7001:7001
@@ -72,6 +75,7 @@ services:
       - api-gateway
 
   car-service:
+    build: ./car-service
     image: mehmetemre46/rentcarservice:version1.4
     ports:
       - 6001:6001

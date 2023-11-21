@@ -3,3 +3,8 @@ docker build -t mehmetemre46/rentcardiscoveryserver:version1.1 .
 docker build -t mehmetemre46/rentcarservice:version1.2 .
 docker build -t mehmetemre46/rentcarrentalservice:version1.3 .
 
+eureka.instance.prefer-ip-address=true
+#eureka.instance.hostname=localhost
+
+bunu local host yap
+
