@@ -42,42 +42,59 @@ services:
       - C:\2023_Kodlama\dockerVolumes\rentCarMongoVolume:/data/db
 
   api-gateway:
-    image: mehmetemre46/rentcarapigateway:version1.2
+    build: ./api-gateway
+    #image: mehmetemre46/rentcarapigateway:version1.2
     ports:
       - 8020:8020
     mem_limit: 700m
-#    networks:
-#      - my-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+#      - eureka.instance.prefer-ip-address=trued
+#      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka
+#      - SPRING_CLOUD_GATEWAY_ROUTES_2_URI=http://discovery-service:8761
+#      - SPRING_CLOUD_GATEWAY_ROUTES_3_URI=http://discovery-service:8761
+
 #    depends_on:
+#      - discovery-service
+
 
 
   discovery-service:
-    image: mehmetemre46/rentcardiscoveryserver:version1.1
+    build: ./discovery-server
+    #image: mehmetemre46/rentcardiscoveryserver:version1.1
     ports:
       - 8761:8761
     mem_limit: 700m
-
+    environment:
+      - eureka.instance.prefer-ip-address= true
     depends_on:
       - keycloak
 
   rental-service:
-    image: mehmetemre46/rentcarrentalservice:version1.5
+    build: ./rental-service
+    #image: mehmetemre46/rentcarrentalservice:version1.5
     ports:
       - 7001:7001
     mem_limit: 700m
-
+    environment:
+      - eureka.instance.prefer-ip-address=true
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/car-rental-service1
     depends_on:
       - postgres
       - discovery-service
       - api-gateway
 
   car-service:
-    image: mehmetemre46/rentcarservice:version1.4
+    build: ./car-service
+    #image: mehmetemre46/rentcarservice:version1.4
     ports:
       - 6001:6001
     mem_limit: 700m
-#    networks:
-#      - my-network
+    environment:
+      - eureka.instance.prefer-ip-address=true
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka
+      - spring.data.mongodb.uri=mongodb://root:root@mongodb:27017/carService?authSource=admin
     depends_on:
       - mongodb
       - discovery-service
