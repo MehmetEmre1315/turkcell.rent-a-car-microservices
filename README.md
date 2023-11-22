@@ -12,3 +12,7 @@ http://localhost:6001/swagger-ui/index.html#/
 rental service swagger, local
 
 http://localhost:7001/swagger-ui/index.html#/
+
+customer service swagger, local
+
+http://localhost:8001/swagger-ui/index.html#/
