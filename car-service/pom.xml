@@ -28,6 +28,11 @@
 			<version>2.0.2</version>
 		</dependency>
 		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.35.0</version> <!-- SDK'nın güncel sürümüne göre değişebilir -->
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>

@@ -7,6 +7,7 @@ import com.turkcell.Rental.Service.dto.responses.AddRentalToDtoResponse;
 import com.turkcell.Rental.Service.services.RentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("RentalService")
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RentalServiceController {
     private final RentalService rentalService;
+    private final KafkaTemplate<String,String> kafkaTemplate;
 
     @PostMapping("addRentalCar")
     @ResponseStatus(HttpStatus.CREATED)
@@ -32,6 +34,7 @@ public class RentalServiceController {
 
     @PostMapping("Rent a Car")
     public AddRentalToDtoResponse rentCar(@RequestBody IsAvailableToRentRequest request) {
+        kafkaTemplate.send("notificationTopic","Car rented");
         return rentalService.rentCar(request);
     }
     @PostMapping("Return a Car")

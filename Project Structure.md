@@ -45,8 +45,8 @@ CustomerService'i oluşturalım. Bu servis arkasında PostgreSql kullanan (ayrı
 
 `Kayıt olma`
 
-`Müşteri girişini eski sistem Spring Security ile sağlayıp JWT üretme (şu anlık sadece giriş yapıp jwt almamız yeterli sistemde bu jwt kullanımını sonra ele alacağız)
-`
+~~Müşteri girişini eski sistem Spring Security ile sağlayıp JWT üretme (şu anlık sadece giriş yapıp jwt almamız yeterli sistemde bu jwt kullanımını sonra ele alacağız)~~
+
 
 `Müşteri servisi ile rental servisi arasına sync communacation için altyapıyı şimdiden hazırlayalım.
 `
@@ -54,3 +54,10 @@ CustomerService'i oluşturalım. Bu servis arkasında PostgreSql kullanan (ayrı
 RentalService ile NotificationService arasındaki async communication için gerekli kafka konfigürasyonları yapalım.
 RentalService içerisinde bir adet kiralama fonksiyonu oluşturalım ve bu fonksiyon NotificationService'i async bir şekilde uyarsın.
 NotificationService içerisinde uyarılan fonksiyonda mail ile bildirim gönderme simülasyonu yapalım. (Gerçekten mail gönderilmesine gerek yok simülasyon)
+
+# Proje Çalışması 3
+Rental service'iniz aşağıdaki özellikleri sağlayarak kiralama verisini veritabanına ekleme işlevini sağlamalıdır;
+
+Kiralama yapılırken sync bir şekilde car serviceden arabanın durumu kontrol edilmeli
+Yine sync bir şekilde kiralama için fiyatın CustomerService'den customer tablosunda yeterli bakiye olup olmadığı kontrol edilsin (tabloda basitce bir alan tutabilirsin customer servicede)
+Şu anlık CustomerId'yi kiralama yaparken giden bilgide manual gönderebilirsiniz.
