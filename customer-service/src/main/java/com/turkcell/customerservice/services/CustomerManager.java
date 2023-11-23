@@ -23,6 +23,7 @@ public class CustomerManager implements CustomerService {
                 .returnCarDate(request.getReturnCarDate())
                 .expectedReturnCarDate(request.getExpectedReturnCarDate())
                 .phone(request.getPhone())
+                .moneyOfCustomer(request.getMoneyOfCustomer())
                 .build();
         customer = customerServiceRepository.save(customer);
 
@@ -36,6 +37,7 @@ public class CustomerManager implements CustomerService {
                 .returnCarDate(customer.getReturnCarDate())
                 .expectedReturnCarDate(customer.getExpectedReturnCarDate())
                 .phone(customer.getPhone())
+                .moneyOfCustomer(customer.getMoneyOfCustomer())
                 .build();
 
         return response;

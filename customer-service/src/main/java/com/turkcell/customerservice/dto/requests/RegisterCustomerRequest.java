@@ -22,4 +22,5 @@ public class RegisterCustomerRequest {
     private LocalDate returnCarDate;
     private LocalDate expectedReturnCarDate;
     private String phone;
+    private short moneyOfCustomer;
 }

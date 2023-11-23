@@ -35,6 +35,8 @@ public class Customer {
     private LocalDate expectedReturnCarDate;
     @Column(name="customer_phone")
     private String phone;
+    @Column(name="money_of_customer")
+    private short moneyOfCustomer;
 
 
 

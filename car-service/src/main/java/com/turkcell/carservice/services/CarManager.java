@@ -1,5 +1,6 @@
 package com.turkcell.carservice.services;
 
+import com.cloudinary.Cloudinary;
 import com.turkcell.carservice.dto.requests.AddCarToDtoRequest;
 import com.turkcell.carservice.dto.requests.AddRentalCar;
 import com.turkcell.carservice.dto.requests.GetByIdCarDtoRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import java.util.List;
 public class CarManager implements CarService{
     private final CarRepository carRepository;
     private final WebClient.Builder webClientBuilder;
+    private final CloudinaryUploader cloudinaryUploader;
 
     @Override
     @Transactional
@@ -121,7 +124,7 @@ public class CarManager implements CarService{
     }
 
     @Override
-    public AddCarToDtoResponse update(AddCarToDtoRequest request) {
+    public AddCarToDtoResponse update(AddCarToDtoRequest request) throws IOException {
         Car car = carRepository.findbyIdQuery(request.getId());
         car.setBrand(request.getBrand());
         car.setModel(request.getModel());
@@ -129,6 +132,8 @@ public class CarManager implements CarService{
         car.setModelYear(request.getModelYear());
         car.setDailyRentalPrice(request.getDailyRentalPrice());
         car.setPicture(request.getPicture());
+//        Cloudinary cloud = cloudinaryUploader.cloudinaryUploaderConfig("d","d","d");
+//        car.setPicture(cloudinaryUploader.uploadPhotoToCloudinary(request.getPicture(),cloud));
         carRepository.save(car);
 
         AddCarToDtoResponse response = AddCarToDtoResponse.builder()
