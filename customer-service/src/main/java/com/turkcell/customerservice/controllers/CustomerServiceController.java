@@ -1,11 +1,12 @@
 package com.turkcell.customerservice.controllers;
 
+import com.turkcell.customerservice.dto.requests.RegisterCustomerRequest;
+import com.turkcell.customerservice.dto.responses.RegisterCustomerResponse;
 import com.turkcell.customerservice.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("CustomerService")
 @RestController
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerServiceController {
     private final CustomerService customerService;
 
-    @GetMapping()
-    public int returnInt(){
-        int i = 5;
-        return i;
-
+    @PostMapping("registerCustomer")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RegisterCustomerResponse registerCustomer(@RequestBody RegisterCustomerRequest request){
+        return customerService.register(request);
     }
+
+
+
 
 
 }

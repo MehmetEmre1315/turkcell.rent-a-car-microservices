@@ -11,9 +11,4 @@ public class NotificationserviceApplication {
 		SpringApplication.run(NotificationserviceApplication.class, args);
 	}
 
-	@KafkaListener(topics = "notificationTopic", groupId = "notificationId")
-	public void handleNotificationEvent(String message)
-	{
-		System.out.println("Topicte bir mesaj yakalandı: " + message);
-	}
 }
