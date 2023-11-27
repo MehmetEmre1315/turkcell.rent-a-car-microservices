@@ -1,17 +1,16 @@
-package com.turkcell.customerservice.dto.responses;
+package com.turkcell.Rental.Service.dto.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterCustomerResponse {
+public class GetByIdFromCustomerServiceResponse {
+
     private short customerId;
     private String lastName;
     private String firstName;

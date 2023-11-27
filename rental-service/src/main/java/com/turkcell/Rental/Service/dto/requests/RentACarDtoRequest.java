@@ -1,4 +1,4 @@
-package com.turkcell.customerservice.dto.responses;
+package com.turkcell.Rental.Service.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,10 +11,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RegisterCustomerResponse {
+public class RentACarDtoRequest {
+    private int carId;
     private short customerId;
-    private String lastName;
-    private String firstName;
-    private String phone;
-    private float moneyOfCustomer;
+    private LocalDate takeCarDate;
+    private LocalDate returnCarDate;
 }

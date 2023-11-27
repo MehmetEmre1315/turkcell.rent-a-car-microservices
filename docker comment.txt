@@ -8,3 +8,7 @@ eureka.instance.prefer-ip-address=true
 
 bunu local host yap
 
+config server cloud properties donyasına ekleneniyor, githubda tutuluyor
+
+docker-compose -f docker-compose.yml -f docker-compose-services.yml up -d
+

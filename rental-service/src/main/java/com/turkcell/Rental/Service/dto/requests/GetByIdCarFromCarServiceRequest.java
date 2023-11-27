@@ -1,4 +1,4 @@
-package com.turkcell.carservice.dto.requests;
+package com.turkcell.Rental.Service.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ImageDtoRequest {
+public class GetByIdCarFromCarServiceRequest {
     private int id;
-    private String path;
 }

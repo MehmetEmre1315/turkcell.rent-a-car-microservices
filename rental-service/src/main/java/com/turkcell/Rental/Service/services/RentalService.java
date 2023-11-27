@@ -1,9 +1,9 @@
 package com.turkcell.Rental.Service.services;
 
-import com.turkcell.Rental.Service.dto.requests.AddRentalToDtoRequest;
-import com.turkcell.Rental.Service.dto.requests.DeleteRentalCarDto;
-import com.turkcell.Rental.Service.dto.requests.IsAvailableToRentRequest;
+import com.turkcell.Rental.Service.dto.requests.*;
 import com.turkcell.Rental.Service.dto.responses.AddRentalToDtoResponse;
+import com.turkcell.Rental.Service.dto.responses.GetByIdCarFromCarServiceResponse;
+import com.turkcell.Rental.Service.dto.responses.RentACarDtoResponse;
 
 public interface RentalService {
 
@@ -11,7 +11,8 @@ public interface RentalService {
     boolean isAvailableToRent(IsAvailableToRentRequest request);
     void deleteRentalCar(DeleteRentalCarDto request);
 
-    AddRentalToDtoResponse rentCar(IsAvailableToRentRequest request);
+    RentACarDtoResponse rentCar(RentACarDtoRequest request);
     AddRentalToDtoResponse returnCar(IsAvailableToRentRequest request);
+
 
 }

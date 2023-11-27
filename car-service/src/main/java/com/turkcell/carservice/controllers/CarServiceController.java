@@ -1,9 +1,7 @@
 package com.turkcell.carservice.controllers;
 
-import com.cloudinary.Cloudinary;
 import com.turkcell.carservice.dto.requests.AddCarToDtoRequest;
 import com.turkcell.carservice.dto.requests.GetByIdCarDtoRequest;
-import com.turkcell.carservice.dto.requests.ImageDtoRequest;
 import com.turkcell.carservice.dto.responses.AddCarToDtoResponse;
 import com.turkcell.carservice.dto.responses.GetByIdCarDtoResponse;
 import com.turkcell.carservice.services.CarService;

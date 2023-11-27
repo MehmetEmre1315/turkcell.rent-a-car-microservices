@@ -16,11 +16,6 @@ public class RegisterCustomerRequest {
 
     private String lastName;
     private String firstName;
-    private short rentalCarId;
-    private boolean isCustomerUseRentalCar;
-    private LocalDate takeCarDate;
-    private LocalDate returnCarDate;
-    private LocalDate expectedReturnCarDate;
     private String phone;
-    private short moneyOfCustomer;
+    private float moneyOfCustomer;
 }

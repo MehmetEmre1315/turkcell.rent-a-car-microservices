@@ -3,7 +3,9 @@ package com.turkcell.Rental.Service.controllers;
 import com.turkcell.Rental.Service.dto.requests.AddRentalToDtoRequest;
 import com.turkcell.Rental.Service.dto.requests.DeleteRentalCarDto;
 import com.turkcell.Rental.Service.dto.requests.IsAvailableToRentRequest;
+import com.turkcell.Rental.Service.dto.requests.RentACarDtoRequest;
 import com.turkcell.Rental.Service.dto.responses.AddRentalToDtoResponse;
+import com.turkcell.Rental.Service.dto.responses.RentACarDtoResponse;
 import com.turkcell.Rental.Service.services.RentalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -33,7 +35,7 @@ public class RentalServiceController {
     public void deleteById(@RequestBody DeleteRentalCarDto request) {rentalService.deleteRentalCar(request);}
 
     @PostMapping("Rent a Car")
-    public AddRentalToDtoResponse rentCar(@RequestBody IsAvailableToRentRequest request) {
+    public RentACarDtoResponse rentCar(@RequestBody RentACarDtoRequest request) {
         kafkaTemplate.send("notificationTopic","Car rented");
         return rentalService.rentCar(request);
     }
