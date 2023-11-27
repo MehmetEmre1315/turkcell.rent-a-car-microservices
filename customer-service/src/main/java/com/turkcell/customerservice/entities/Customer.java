@@ -23,20 +23,10 @@ public class Customer {
     private String lastName;
     @Column(name="first_name")
     private String firstName;
-    @Column(name="rental_car_id")
-    private short rentalCarId;
-    @Column(name="is_customer_use_rental_car")
-    private boolean isCustomerUseRentalCar;
-    @Column(name="take_car_date")
-    private LocalDate takeCarDate;
-    @Column(name="return_car_date")
-    private LocalDate returnCarDate;
-    @Column(name="expected_return_car_date")
-    private LocalDate expectedReturnCarDate;
     @Column(name="customer_phone")
     private String phone;
     @Column(name="money_of_customer")
-    private short moneyOfCustomer;
+    private float moneyOfCustomer;
 
 
 

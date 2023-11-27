@@ -26,25 +26,6 @@ services:
     volumes:
       - C:/2023_Kodlama/dockerVolumes/rentCarPostgreVolume:/var/lib/postgresql/data
 
-  zookeeper:
-    image: confluentinc/cp-zookeeper
-    ports:
-      - 2181:2181
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-
-  kafka:
-    image: confluentinc/cp-kafka
-    ports:
-      - 9092:9092
-    environment:
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://broker:29092
-      KAFKA_BROKER_ID: 1
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-
   mongodb:
     image: mongo
     container_name: mongodb
@@ -60,11 +41,8 @@ services:
     volumes:
       - C:\2023_Kodlama\dockerVolumes\rentCarMongoVolume:/data/db
 
-
-
   api-gateway:
     build: ./api-gateway
-    #image: mehmetemre46/rentcarapigateway:version1.2
     ports:
       - 8020:8020
     mem_limit: 700m
@@ -82,7 +60,6 @@ services:
 
   discovery-service:
     build: ./discovery-server
-    #image: mehmetemre46/rentcardiscoveryserver:version1.1
     ports:
       - 8761:8761
     mem_limit: 700m
@@ -93,22 +70,30 @@ services:
 
   rental-service:
     build: ./rental-service
-    #image: mehmetemre46/rentcarrentalservice:version1.5
     ports:
       - 7001:7001
     mem_limit: 700m
     environment:
+#      - SPRING_PROFILES_ACTIVE=docker
       - eureka.instance.prefer-ip-address=true
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka
       - spring.datasource.url=jdbc:postgresql://postgres:5432/car-rental-service1
+
     depends_on:
       - postgres
       - discovery-service
       - api-gateway
+      - notification-service
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - 8085:8085
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=docker
 
   car-service:
     build: ./car-service
-    #image: mehmetemre46/rentcarservice:version1.4
     ports:
       - 6001:6001
     mem_limit: 700m
@@ -121,6 +106,11 @@ services:
       - discovery-service
       - api-gateway
 
-networks:
-  my-network:
-    driver: bridge
+  customer-service:
+    build: ./customer-service
+    ports:
+      - 8001:8001
+    environment:
+      - eureka.instance.prefer-ip-address=true
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka
+      - spring.datasource.url=jdbc:postgresql://postgres:5432/customer-rental-service1
