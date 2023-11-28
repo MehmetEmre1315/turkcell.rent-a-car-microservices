@@ -41,6 +41,28 @@ services:
     volumes:
       - C:\2023_Kodlama\dockerVolumes\rentCarMongoVolume:/data/db
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka
+    ports:
+      - 9092:9092
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      #KAFKA_ZOOKEEPER_CONNECT: localhost:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_INTERNAL://broker:29092
+      #KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_INTERNAL:PLAINTEXT,LISTENER_EXTERNAL:PLAINTEXT
+      #KAFKA_ADVERTISED_LISTENERS: LISTENER_INTERNAL://kafka0:29090,LISTENER_EXTERNAL://localhost:9092
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
   api-gateway:
     build: ./api-gateway
     ports:
@@ -78,6 +100,7 @@ services:
       - eureka.instance.prefer-ip-address=true
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka
       - spring.datasource.url=jdbc:postgresql://postgres:5432/car-rental-service1
+      - spring.kafka.bootstrap-servers=kafka:9092
 
     depends_on:
       - postgres
@@ -89,7 +112,8 @@ services:
     build: ./notification-service
     ports:
       - 8085:8085
-#    environment:
+    environment:
+      - spring.kafka.bootstrap-servers=kafka:9092
 #      - SPRING_PROFILES_ACTIVE=docker
 
   car-service:
