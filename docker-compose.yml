@@ -62,6 +62,17 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+
+  kafka-manager:
+    image: hlebalbau/kafka-manager
+    ports:
+      - 9000:9000
+    environment:
+      ZK_HOSTS: zookeeper:2181
+    depends_on:
+      - kafka
 
   api-gateway:
     build: ./api-gateway
