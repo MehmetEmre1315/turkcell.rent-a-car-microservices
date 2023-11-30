@@ -10,6 +10,8 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
     command:
       - start-dev
+#    networks:
+#      - auth-network
     volumes:
       - C:/2023_Kodlama/dockerVolumes/rentCarKeycloakVolume:/opt/keycloak/data
 
@@ -62,6 +64,17 @@ services:
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+
+  kafka-manager:
+    image: hlebalbau/kafka-manager
+    ports:
+      - 9000:9000
+    environment:
+      ZK_HOSTS: zookeeper:2181
+    depends_on:
+      - kafka
 
   api-gateway:
     build: ./api-gateway
@@ -70,6 +83,7 @@ services:
     mem_limit: 700m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - spring.security.oauth2.resourceserver.jwt.issuer-uri=http://keycloak:8080/realms/rentACarMicroservices
 #      - eureka.instance.prefer-ip-address=trued
 #      - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka
 #      - SPRING_CLOUD_GATEWAY_ROUTES_2_URI=http://discovery-service:8761
@@ -87,8 +101,8 @@ services:
     mem_limit: 700m
     environment:
       - eureka.instance.prefer-ip-address= true
-    depends_on:
-      - keycloak
+#    depends_on:
+#      - keycloak
 
   rental-service:
     build: ./rental-service
@@ -129,6 +143,9 @@ services:
       - mongodb
       - discovery-service
       - api-gateway
+    #/images/1233px-Opel_Mokka-e_IMG_6111.jpg
+    volumes:
+      - C:/2023_Kodlama/javaTurkcell/turkcell.rent-a-car-microservices/images:/images
 
   customer-service:
     build: ./customer-service
@@ -138,3 +155,7 @@ services:
       - eureka.instance.prefer-ip-address=true
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:8761/eureka
       - spring.datasource.url=jdbc:postgresql://postgres:5432/customer-rental-service1
+
+networks:
+  auth-network:
+    driver: bridge
