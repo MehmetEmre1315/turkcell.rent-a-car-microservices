@@ -8,4 +8,6 @@ import com.turkcell.customerservice.dto.responses.RegisterCustomerResponse;
 public interface CustomerService {
     RegisterCustomerResponse register(RegisterCustomerRequest request);
     GetByIdResponse getById(GetByIdRequest request);
+
+    RegisterCustomerResponse update(RegisterCustomerRequest request, short customerId);
 }

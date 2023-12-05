@@ -27,6 +27,11 @@ public class CustomerServiceController {
         return customerService.getById(request);
     }
 
+    @PutMapping("updateCustomer")
+    @ResponseStatus(HttpStatus.OK)
+    public RegisterCustomerResponse updateCustomer(@RequestBody RegisterCustomerRequest request, @RequestParam short customerId){
+        return customerService.update(request,customerId);
+    }
 
 
 

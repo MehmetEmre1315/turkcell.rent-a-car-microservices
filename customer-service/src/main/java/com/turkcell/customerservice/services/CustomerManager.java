@@ -49,4 +49,25 @@ public class CustomerManager implements CustomerService {
 
         return response;
     }
+
+    @Override
+    public RegisterCustomerResponse update(RegisterCustomerRequest request, short customerId) {
+        Customer existingCustomer = customerServiceRepository.findByCustomerId(customerId);
+
+        existingCustomer.setLastName(request.getLastName());
+        existingCustomer.setFirstName(request.getFirstName());
+        existingCustomer.setPhone(request.getPhone());
+        existingCustomer.setMoneyOfCustomer(request.getMoneyOfCustomer());
+        customerServiceRepository.save(existingCustomer);
+
+        RegisterCustomerResponse response = RegisterCustomerResponse.builder()
+                .customerId(existingCustomer.getCustomerId())
+                .lastName(existingCustomer.getLastName())
+                .firstName(existingCustomer.getFirstName())
+                .phone(existingCustomer.getPhone())
+                .moneyOfCustomer(existingCustomer.getMoneyOfCustomer())
+                .build();
+
+        return response;
+    }
 }
